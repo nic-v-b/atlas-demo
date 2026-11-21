@@ -1,0 +1,18 @@
+.import-controls { max-width: 680px; margin-bottom: 20px; }
+.import-controls h2 { margin-top: 6px; }
+.import-controls p, .import-limits p { color: var(--muted); font-size: 15px; margin: 8px 0; }
+.import-controls label { display: block; margin: 14px 0 6px; font-weight: 650; }
+.import-controls label small { display: block; font-weight: 400; }
+.import-controls .ack { display: flex; gap: 8px; align-items: baseline; font-size: 14px; font-weight: 400; }
+.import-controls input[type="file"] { display: block; max-width: 100%; width: 100%; padding: 9px; color: var(--text); background: var(--panel); border: 1px solid var(--control-border); }
+.import-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
+.import-actions button:first-child:not(:disabled) { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.import-result-title { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.import-total { margin-top: 10px; }
+.import-limits { margin-top: 16px; }
+#account-totals p { color: var(--muted); font-size: 14px; }
+
+@media (max-width: 560px) {
+  .import-actions button { flex-basis: 100%; }
+  .import-pockets { grid-template-columns: minmax(0, 1fr); }
+}

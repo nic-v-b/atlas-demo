@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en-CA"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>ATLAS — Holdings · Fictional portfolio</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/holdings.css">
+<script type="module" defer src="/holdings.js"></script>
+</head><body class="light">
+<div class="shell">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ATLAS overview"><span class="mark" aria-hidden="true">A</span><span>ATLAS <small>Investment research</small></span></a>
+    <nav class="workspace-nav" aria-label="Workspace navigation">
+      <a href="/">Overview</a>
+      <a href="/holdings" aria-current="page">Holdings</a>
+      <a href="/tax-lab">Tax Lab</a>
+    </nav>
+    <div class="top-controls"><span class="demo">SYNTHETIC MODE</span><button id="theme" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">☾</button></div>
+  </header>
+  <main class="workspace">
+    <div class="content holdings-content">
+      <div class="heading">
+        <div><div class="eyebrow">PORTFOLIO LEDGER</div>
+          <h1>What do I hold, and where?</h1>
+          <p>Read across fictional accounts with native and CAD-equivalent values side by side.</p></div>
+        <div class="h-asof">FICTIONAL QUOTE SNAPSHOT <strong id="asof">—</strong></div>
+      </div>
+      <section class="h-filter-panel" aria-label="Select fictional accounts">
+        <div class="h-filter-heading"><div><span class="cap">Account scope</span><p>Selected accounts determine Holdings and Overview totals and insights. The Tax Lab's owner-wide taxable ACB is independent of this filter.</p></div>
+          <button id="select-all" type="button">Select all</button><button id="retry-load" type="button">Refresh snapshot</button></div>
+        <div id="account-filters" class="h-filter-options" role="group" aria-label="Fictional accounts"></div>
+      </section>
+      <section class="value-strip ledger-values" aria-label="Valuation across selected accounts">
+        <div><span>Portfolio value</span><strong id="cad-equivalent">—</strong><small>CAD equivalent · <span id="selected-count">— accounts selected</span></small></div>
+        <div><span>Canadian-dollar pocket</span><strong id="cad-total">—</strong><small>Cash and positions</small></div>
+        <div><span>US-dollar pocket</span><strong id="usd-total">—</strong><small>Cash and positions</small></div>
+      </section>
+      <div id="h-error" class="notice" role="alert" hidden></div>
+      <div class="research-spread ledger-spread">
+      <section class="ledger-panel" aria-labelledby="positions-title">
+        <div class="panelhead"><div><span class="cap">POSITIONS</span><h3 id="positions-title">Holdings by account</h3></div><span class="tag">Fictional manual quotes</span></div>
+        <div class="h-table-scroll" tabindex="0" role="region" aria-label="Positions table">
+          <table class="h-table"><thead><tr>
+            <th scope="col">Investment</th><th scope="col">Account</th><th scope="col" class="num">Units</th>
+            <th scope="col" class="num">Unit quote</th><th scope="col" class="num">Book value*</th>
+            <th scope="col" class="num">Market value (native)</th><th scope="col" class="num">Market value (CAD)</th><th scope="col" class="num">Unrealised P/L (native)</th>
+          </tr></thead><tbody id="h-position-rows"><tr><td colspan="8">Loading fictional holdings…</td></tr></tbody></table>
+        </div>
+        <p class="h-note">Scroll the table horizontally on smaller screens. *Per-account native book cost; not pooled Canadian taxable ACB. Quotes, FX and transactions are invented. Returns, tax obligations and cash-FX gains are not calculated here.</p>
+      </section>
+        <aside class="evidence-rail" aria-labelledby="ledger-evidence">
+          <span class="eyebrow">Valuation evidence</span>
+          <h2 id="ledger-evidence">Native and converted values</h2>
+          <p id="fx-note" class="snapshot-note">No conversion without an explicit dated FX quotation.</p>
+          <section class="h-pocket" aria-labelledby="cad-breakdown">
+            <h3 id="cad-breakdown">CAD breakdown</h3>
+            <div class="h-pocket-line"><span>Cash</span><b id="cad-cash">—</b></div>
+            <div class="h-pocket-line"><span>Positions</span><b id="cad-positions">—</b></div>
+          </section>
+          <section class="h-pocket" aria-labelledby="usd-breakdown">
+            <h3 id="usd-breakdown">USD breakdown</h3>
+            <div class="h-pocket-line"><span>Cash</span><b id="usd-cash">—</b></div>
+            <div class="h-pocket-line"><span>Positions</span><b id="usd-positions">—</b></div>
+          </section>
+          <p class="evidence-callout">CAD and USD stay in their native amounts. Use the dated CAD equivalent to compare across currencies.</p>
+          <a href="/tax-lab">How does Canadian ACB work?</a>
+        </aside>
+      </div>
+      <section class="h-insight" aria-live="polite">
+        <div class="h-insight-top"><span class="cap">Holdings observation</span><span id="insight-state" class="h-insight-status">CALCULATING</span></div>
+        <h2 id="insight-title">Evaluating fictional holdings…</h2>
+        <p id="insight-text">Only deterministic accounting inputs are considered.</p>
+        <div id="insight-evidence" class="h-insight-evidence">—</div>
+      </section>
+      <section class="h-panel h-composition-panel" aria-labelledby="h-composition-title">
+        <div class="panelhead"><div><span class="cap">PORTFOLIO COMPOSITION</span>
+          <h3 id="h-composition-title">What do your investments actually represent?</h3></div>
+          <span class="tag">Selected accounts · Fictional classifications</span></div>
+        <p class="h-note h-composition-intro">Investment type tells you whether you own ETFs, stocks or receipts. The other views show their underlying themes, industries and regions—without adding the same money twice. Cash is included in total-portfolio percentages.</p>
+        <div class="h-value-mode" role="group" aria-label="Portfolio composition label format">
+          <span>DISPLAY</span>
+          <button id="mode-money" type="button" data-value-mode="money" aria-pressed="false">CA$</button>
+          <button id="mode-percent" type="button" data-value-mode="percent" aria-pressed="false">%</button>
+          <button id="mode-both" type="button" data-value-mode="both" aria-pressed="true">Both</button>
+        </div>
+        <div class="h-exposure-tabs" role="tablist" aria-label="Portfolio composition dimension">
+          <button type="button" id="tab-vehicle" role="tab" aria-selected="true" aria-controls="h-exposure-panel" tabindex="0" data-exposure="vehicle">Investment type</button>
+          <button type="button" id="tab-strategy" role="tab" aria-selected="false" aria-controls="h-exposure-panel" tabindex="-1" data-exposure="strategy">ETF & stock themes</button>
+          <button type="button" id="tab-sector" role="tab" aria-selected="false" aria-controls="h-exposure-panel" tabindex="-1" data-exposure="sector">Sectors</button>
+          <button type="button" id="tab-geography" role="tab" aria-selected="false" aria-controls="h-exposure-panel" tabindex="-1" data-exposure="geography">Geography</button>
+        </div>
+        <div id="h-exposure-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-vehicle">
+          <div id="h-allocation" class="h-allocation" role="img" aria-label="Fictional portfolio composition by investment type"></div>
+          <div class="h-exposure-columns">
+            <div id="h-legend" class="h-legend"></div>
+            <aside class="h-etf-detail" aria-labelledby="h-etf-title">
+              <span class="cap">INSIDE YOUR ETFs</span><h4 id="h-etf-title">Global vs. sector-focused funds</h4>
+              <div id="h-etf-mix"></div>
+              <p>Each percentage indicates either its share of your ETF investments or its share of the selected total portfolio.</p>
+            </aside>
+          </div>
+        </div>
+        <p id="allocation-note" class="h-note">Illustrative category weights, not verified ETF holdings. Each view is a separate breakdown of the same total.</p>
+      </section>
+      <section class="h-details-grid">
+        <article class="h-panel">
+          <div class="panelhead"><div><span class="cap">ACCOUNT BREAKDOWN</span><h3>Where the value is held</h3></div><span class="tag">By currency</span></div>
+          <div id="h-account-details"></div>
+          <p class="h-note">Per-account balances stay distinct even when several accounts are selected.</p>
+        </article>
+        <article class="h-panel h-sector-panel" aria-label="Portfolio sector analytics">
+          <div class="panelhead"><div><span class="cap">PORTFOLIO ANALYTICS</span><h3>Where your invested money goes</h3></div><span class="tag">Sectors · Excludes cash</span></div>
+          <div class="h-sector-visual">
+            <div id="h-sector-donut" class="h-sector-donut" role="img" aria-label="Fictional sector exposure ring">
+              <div class="h-donut-hole"><small id="h-sector-focus-label">INVESTED ASSETS</small><strong id="h-sector-focus-value">—</strong></div>
+            </div>
+            <div id="h-sector-key" class="h-sector-key" aria-label="Sector chart data"></div>
+          </div>
+          <p id="h-coverage" class="h-note">Fictional classification coverage and uncertainty appear here.</p>
+        </article>
+      </section>
+      <section class="h-panel h-policy-panel" aria-labelledby="h-policy-heading">
+        <div class="panelhead"><div><span class="cap">ILLUSTRATIVE ALLOCATION CHECK</span>
+          <h3 id="h-policy-heading">Current sectors vs. a sample investment plan</h3></div>
+          <span class="tag">Invented targets · Not investment advice</span></div>
+        <p class="h-policy-intro">The colored bars show current exposure within invested holdings, while the vertical markers show a fictional allocation target. These targets are examples—not an ideal portfolio or suggested purchases.</p>
+        <div class="h-policy-legend"><span><i class="h-policy-swatch"></i> Current allocation</span><span><i class="h-policy-tick"></i> Example target</span></div>
+        <div id="h-target-bars" class="h-target-grid" aria-label="Current sectors compared with fictional example targets"></div>
+        <p id="h-target-note" class="h-note">A sector cannot be called underinvested without a valid, user-selected target or benchmark.</p>
+      </section>
+      <footer>ATLAS SYNTHETIC HOLDINGS · NO ACTUAL ACCOUNT DATA · LOCALHOST ONLY · NOT FINANCIAL OR TAX ADVICE</footer>
+    </div>
+  </main>
+</div></body></html>
